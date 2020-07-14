@@ -1,0 +1,34 @@
+{
+    "id": "kafka-producer",
+    "mem": 512,
+    "user": "nobody",
+    "container": {
+        "type": "MESOS",
+        "docker": {
+            "image": "rishabh96b/kafka-client:latest",
+            "forcePullImage": true
+        },
+        "volumes": [
+            {
+                "containerPath": "/tmp/kafkaconfig/kafka-client.keytab",
+                "secret": "kafka_keytab"
+            }
+        ]
+    },
+    "secrets": {
+        "kafka_keytab": {
+            "source": "__dcos_base64___keytab"
+        }
+    },
+    "networks": [
+        {
+            "mode": "host"
+        }
+    ],
+    "env": {
+        "JVM_MaxHeapSize": "512",
+        "KAFKA_CLIENT_MODE": "producer",
+        "KAFKA_SERVICE_NAME": "kafka",
+        "KAFKA_TOPIC_NAME": "kafka-test-topic"
+    }
+}
